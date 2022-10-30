@@ -73,7 +73,7 @@ public class TaskFragment extends Fragment {
 
         doneCheckBox.setChecked(task.isDone());
         doneCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> task.setDone(isChecked));
-        return inflater.inflate(R.layout.fragment_task,container,false);
+        return view;
 
     }
 

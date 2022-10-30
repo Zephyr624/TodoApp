@@ -19,11 +19,11 @@ public class TaskListFragment extends Fragment {
     public static final String KEY_EXTRA_TASK_ID = "extra_task_id";
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private TextView nameTextView;
-    private TextView dateTextView;
+
     private class TaskHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private Task task;
-
+        private TextView nameTextView;
+        private TextView dateTextView;
         public TaskHolder(LayoutInflater inflater, ViewGroup parent){
             super(inflater.inflate(R.layout.list_item_task, parent , false));
             itemView.setOnClickListener(this);

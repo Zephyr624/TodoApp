@@ -25,13 +25,13 @@ public class TaskStorage {
         return tasks;
     }
     public Task getTask(UUID number) {
-        Task task;
+        Task task=null;
         for (int i = 0; i < tasks.size(); i++) {
             task = tasks.get(i);
             if (task.getId() == number) {
-                return task;
+                break;
             }
         }
-        return new Task();
+        return task;
     }
 }

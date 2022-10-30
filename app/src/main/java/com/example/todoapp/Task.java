@@ -14,7 +14,7 @@ public class Task {
     }
 
     public void setName(String toString) {
-        name=toString;
+        this.name=toString;
     }
 
     public Object getDate() {
@@ -26,7 +26,7 @@ public class Task {
     }
 
     public void setDone(boolean isChecked) {
-        done=isChecked;
+        this.done=isChecked;
     }
 
     public String getName() {
