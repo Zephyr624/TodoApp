@@ -18,8 +18,16 @@ public class TaskStorage {
             Task task = new Task();
             task.setName("Zadanie todo nr " + i);
             task.setDone(i%3==0);
+            if(i%3==0){
+                task.setCategory(Category.STUDIES);
+            }else{
+                task.setCategory(Category.HOME);
+            }
             tasks.add(task);
         }
+    }
+    public void addTask(Task task){
+        tasks.add(task);
     }
     public List<Task> getTasks(){
         return tasks;
