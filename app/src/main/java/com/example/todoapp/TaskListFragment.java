@@ -1,6 +1,7 @@
 package com.example.todoapp;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import java.util.List;
 
 public class TaskListFragment extends Fragment {
     public static final String KEY_EXTRA_TASK_ID = "extra_task_id";
+    private static final String KEY_SUBTITLE_VISIBLE = "subtitle_visible";
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private boolean subtitleVisible;
@@ -45,19 +47,27 @@ public class TaskListFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_task_menu,menu);
         MenuItem subtitleItem = menu.findItem(R.id.show_subtitle);
         if(subtitleVisible){
             subtitleItem.setTitle(R.string.hide_subtitle);
         }else{
             subtitleItem.setTitle(R.string.show_subtitle);
         }
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_task_menu,menu);
-    }
 
+    }
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(KEY_SUBTITLE_VISIBLE, subtitleVisible);
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null){
+            subtitleVisible = savedInstanceState.getBoolean(KEY_SUBTITLE_VISIBLE);
+        }
         setHasOptionsMenu(true);
     }
 
@@ -91,19 +101,30 @@ public class TaskListFragment extends Fragment {
         public TaskHolder(LayoutInflater inflater, ViewGroup parent){
             super(inflater.inflate(R.layout.list_item_task, parent , false));
             itemView.setOnClickListener(this);
+
+
+            checkBox= itemView.findViewById(R.id.task_checkbox);
+            nameTextView = itemView.findViewById(R.id.task_item_name);
+            dateTextView = itemView.findViewById(R.id.task_item_date);
+            iconImageView = itemView.findViewById(R.id.icon_image);
+        }
+        public void bind(Task task){
+            this.task = task;
+            nameTextView.setText(task.getName());
+            if (task.isDone()) {
+                nameTextView.setPaintFlags(nameTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                nameTextView.setPaintFlags(nameTextView.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+            }
+            if (!task.isDone()) {
+                nameTextView.setPaintFlags( nameTextView.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                nameTextView.setPaintFlags(nameTextView.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+            }
             if(task.getCategory().equals(Category.HOME)){
                 iconImageView.setImageResource(R.drawable.ic_home);
             }else{
                 iconImageView.setImageResource(R.drawable.ic_studies);
             }
-
-            checkBox= itemView.findViewById(R.id.task_checkbox);
-            nameTextView = itemView.findViewById(R.id.task_item_name);
-            dateTextView = itemView.findViewById(R.id.task_item_date);
-        }
-        public void bind(Task task){
-            this.task = task;
-            nameTextView.setText(task.getName());
+            //nameTextView.setText(task.getName());
             dateTextView.setText(task.getDate().toString());
         }
         @Override
@@ -115,6 +136,9 @@ public class TaskListFragment extends Fragment {
 
         public CheckBox getCheckBox() {
             return checkBox;
+        }
+
+        public TextView getNameTextView() {return nameTextView;
         }
     }
     private class TaskAdapter extends RecyclerView.Adapter<TaskHolder>{
@@ -135,9 +159,16 @@ public class TaskListFragment extends Fragment {
         public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
             Task task = tasks.get(position);
             CheckBox checkBox = holder.getCheckBox();
+            TextView nameTextView =holder.getNameTextView();
             checkBox.setChecked(tasks.get(position).isDone());
-            checkBox.setOnCheckedChangeListener((buttonView,isChecked)->
-                    tasks.get(holder.getBindingAdapterPosition()).setDone(isChecked));
+            checkBox.setOnCheckedChangeListener((buttonView,isChecked)->{
+                tasks.get(holder.getBindingAdapterPosition()).setDone(isChecked);
+                if (isChecked){
+                    nameTextView.setPaintFlags(nameTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                }else{
+                    nameTextView.setPaintFlags(nameTextView.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                }
+            });
             holder.bind(task);
         }
 
