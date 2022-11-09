@@ -36,7 +36,7 @@ public class TaskStorage {
         Task task=null;
         for (int i = 0; i < tasks.size(); i++) {
             task = tasks.get(i);
-            if (task.getId() == number) {
+            if (task.getId().equals(number) ) {
                 break;
             }
         }

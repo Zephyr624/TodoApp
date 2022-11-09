@@ -75,6 +75,8 @@ public class TaskFragment extends Fragment {
                         calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH))
                         .show());
         setupDateFieldValue(task.getDate());
+
+
         categorySpinner = view.findViewById(R.id.task_category);
         categorySpinner.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, Category.values()));
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -93,6 +95,7 @@ public class TaskFragment extends Fragment {
         nameTextView= view.findViewById(R.id.label_name);
         doneCheckBox= view.findViewById(R.id.task_done);
         nameField = view.findViewById(R.id.task_name);
+        nameField.setText(task.getName());
         detailsTextView = view.findViewById(R.id.details_name);
         nameField.addTextChangedListener(new TextWatcher(){
 
