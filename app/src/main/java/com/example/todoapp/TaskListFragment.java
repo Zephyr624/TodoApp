@@ -165,8 +165,10 @@ public class TaskListFragment extends Fragment {
                 tasks.get(holder.getBindingAdapterPosition()).setDone(isChecked);
                 if (isChecked){
                     nameTextView.setPaintFlags(nameTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    nameTextView.setPaintFlags(nameTextView.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
                 }else{
                     nameTextView.setPaintFlags(nameTextView.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                    nameTextView.setPaintFlags(nameTextView.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
                 }
             });
             holder.bind(task);

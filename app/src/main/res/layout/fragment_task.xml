@@ -15,7 +15,7 @@
 
     <EditText
         android:id="@+id/task_name"
-
+        style="@style/Theme.TodoApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -23,7 +23,7 @@
 
     <TextView
         android:id="@+id/details_name"
-        style="?android:listSeparatorTextViewStyle"
+        style="@style/Theme.TodoApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -31,6 +31,7 @@
 
     <EditText
         android:id="@+id/task_date"
+        style="@style/Theme.TodoApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -41,6 +42,7 @@
         android:inputType="date"/>
 
     <Spinner
+        style="@style/Theme.TodoApp"
         android:id="@+id/task_category"
         android:layout_width="wrap_content"
         android:layout_height="70dp"
@@ -48,6 +50,7 @@
 
 
     <CheckBox
+        style="@style/Theme.TodoApp"
         android:id="@+id/task_done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
